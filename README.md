@@ -7,6 +7,7 @@ ExpressJS and MongoDB Sample Project
 ---
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Test](https://github.com/safakoks/sample-express/workflows/Testing/badge.svg)
 
 ## Overview
 
@@ -38,3 +39,11 @@ Swagger will be start on `http://localhost:3000/docs`
 | --------- | ----------------------------- |
 | PORT      | Server Port                   |
 | MONGO_URI | Mongo connection string (URI) |
+
+## Error Code
+
+| CODE | DESCRIPTION |
+| ---- | ----------- |
+| 0    | Success     |
+| 1    | Validation  |
+| 2    | System      |
