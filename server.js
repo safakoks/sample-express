@@ -2,6 +2,7 @@ const config = require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const morgan = require("morgan");
 
 const logger = require("./log").newLogger("server");
 const db = require("./db");
@@ -14,6 +15,7 @@ const swaggerDocument = require("./swagger.json");
 const record_sr = require("./service/record_service");
 
 const app = express();
+app.use(morgan());
 app.use(cors());
 app.use(bodyParser.json());
 
