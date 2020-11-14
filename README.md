@@ -11,6 +11,8 @@ ExpressJS and MongoDB Sample Project
 
 ## Overview
 
+> Compatible with NodeJS version 10.x , 12.x and 13.x
+
 Testable on [Swagger](https://sample-express-api.herokuapp.com/docs)
 
 ## Get Started
