@@ -7,13 +7,13 @@ ExpressJS and MongoDB Sample Project
 ---
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Test](https://github.com/safakoks/sample-express/workflows/Testing/badge.svg)
+![Test](https://github.com/safakoks/sample-express/workflows/Test/badge.svg)
 
 ## Overview
 
 > Compatible with NodeJS version 10.x , 12.x and 13.x
 
-Testable on [Swagger](https://sample-express-api.herokuapp.com/docs)
+Testable on Heroku : [Swagger](https://sample-express-api.herokuapp.com/docs)
 
 ## Get Started
 
