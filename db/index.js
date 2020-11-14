@@ -9,13 +9,13 @@ let dbClient;
 function connect() {
   return new Promise((resolve, reject) => {
     MongoClient.connect(
-      process.env.MONGO_URI || global.__MONGO_URI__,
+      global.__MONGO_URI__ || process.env.MONGO_URI,
       function (err, client) {
         if (err) {
           logger.error("Connect", err);
           reject(err);
         }
-        dbClient = client.db(process.env.MONGO_DB || global.__MONGO_DB_NAME__);
+        dbClient = client.db(global.__MONGO_DB_NAME__);
 
         logger.info("Connected successfully to server");
         resolve(dbClient);

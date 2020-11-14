@@ -1,0 +1,112 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Sample Express ",
+    "description": "A sample express project with mongodb",
+    "version": "0.1.0"
+  },
+  "tags": [
+    {
+      "name": "System",
+      "description": "System Endpoints"
+    },
+    {
+      "name": "Record",
+      "description": "Record Management"
+    }
+  ],
+  "paths": {
+    "/ping": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Check healthy of system",
+        "operationId": "ping",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "number", "example": 0 },
+                    "msg": { "type": "string", "example": "ping" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/record": {
+      "post": {
+        "tags": ["Record"],
+        "summary": "Filter records with using parameters, if there is no parameter it returns all records",
+        "operationId": "filterRecords",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": {
+                    "type": "date",
+                    "description": "Starting date",
+                    "example": "2016-12-12"
+                  },
+                  "endDate": {
+                    "type": "date",
+                    "description": "Ending date",
+                    "example": "2017-09-04"
+                  },
+                  "minCount": {
+                    "type": "number",
+                    "description": "Minimum total count",
+                    "example": 10
+                  },
+                  "maxCount": {
+                    "type": "number",
+                    "description": "Maximum total count",
+                    "example": 100
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": { "type": "number", "example": 0 },
+                    "msg": { "type": "string", "example": "Success" },
+                    "records": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "type": "string",
+                            "example": "TAKwGc6Jr4i8Z487"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2017-01-28T01:22:14.398Z"
+                          },
+                          "totalCount": { "type": "number", "example": 2800 }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
