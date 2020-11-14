@@ -116,13 +116,13 @@ describe("Record Service", () => {
         });
     });
 
-    test("should return records which created before 2017-08-4", async (done) => {
+    test("should return records which created before 2017-08-04", async (done) => {
       request(server)
         .post("/record")
         .expect("Content-Type", /json/)
         .expect(200)
         .send({
-          endDate: "2017-08-4",
+          endDate: "2017-08-04",
         })
         .end((err, res) => {
           expect(err).toBeNull();
@@ -253,7 +253,7 @@ describe("Record Service", () => {
         .expect(200)
         .send({
           minCount: 500,
-          startDate: "2016-06-0",
+          startDate: "2016-06-01",
           endDate: "2017-09-22",
         })
         .end((err, res) => {
@@ -290,6 +290,111 @@ describe("Record Service", () => {
             "key3",
             "key5",
           ]);
+          done();
+        });
+    });
+  });
+
+  describe("Error Handling", () => {
+    test("Wrong StartDate Date Type", (done) => {
+      request(server)
+        .post("/record")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .send({
+          startDate: "2016-12",
+        })
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.body.msg).toBe("Wrong date format for startDate");
+          done();
+        });
+    });
+
+    test("Wrong StartDate Type", (done) => {
+      request(server)
+        .post("/record")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .send({
+          startDate: "safdasdf",
+        })
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.body.msg).toBe("Wrong date format for startDate");
+          done();
+        });
+    });
+    test("Wrong endDate Type", (done) => {
+      request(server)
+        .post("/record")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .send({
+          endDate: "safdasdf",
+        })
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.body.msg).toBe("Wrong date format for endDate");
+          done();
+        });
+    });
+    test("Wrong StartDate Format YYYY-DD-MM", (done) => {
+      request(server)
+        .post("/record")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .send({
+          startDate: "2016-30-12",
+        })
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.body.msg).toBe("Wrong date format for startDate");
+          done();
+        });
+    });
+
+    test("Wrong endDate Format YYYY-DD-MM", (done) => {
+      request(server)
+        .post("/record")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .send({
+          endDate: "2016-30-12",
+        })
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.body.msg).toBe("Wrong date format for endDate");
+          done();
+        });
+    });
+
+    test("Wrong minCount type", (done) => {
+      request(server)
+        .post("/record")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .send({
+          minCount: "asd",
+        })
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.body.msg).toBe("Wrong type for minCount");
+          done();
+        });
+    });
+
+    test("Wrong maxCount type", (done) => {
+      request(server)
+        .post("/record")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .send({
+          maxCount: "asd",
+        })
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.body.msg).toBe("Wrong type for maxCount");
           done();
         });
     });
