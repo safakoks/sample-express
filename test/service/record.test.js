@@ -310,7 +310,6 @@ describe("Record Service", () => {
           done();
         });
     });
-
     test("Wrong StartDate Type", (done) => {
       request(server)
         .post("/record")
@@ -339,6 +338,24 @@ describe("Record Service", () => {
           done();
         });
     });
+
+    test("startDate should not be greater than endDate", (done) => {
+      request(server)
+        .post("/record")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .send({
+          startDate: "2016-05-05",
+          endDate: "2016-04-05",
+        })
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.body.msg).toBe(
+            "startDate can not be greater than endDate"
+          );
+          done();
+        });
+    });
     test("Wrong StartDate Format YYYY-DD-MM", (done) => {
       request(server)
         .post("/record")
@@ -353,7 +370,6 @@ describe("Record Service", () => {
           done();
         });
     });
-
     test("Wrong endDate Format YYYY-DD-MM", (done) => {
       request(server)
         .post("/record")
@@ -365,6 +381,24 @@ describe("Record Service", () => {
         .end((err, res) => {
           expect(err).toBeNull();
           expect(res.body.msg).toBe("Wrong date format for endDate");
+          done();
+        });
+    });
+
+    test("minCount should not be greater than maxCount", (done) => {
+      request(server)
+        .post("/record")
+        .expect("Content-Type", /json/)
+        .expect(400)
+        .send({
+          minCount: 1000,
+          maxCount: 500,
+        })
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.body.msg).toBe(
+            "minCount can not be greater than maxCount"
+          );
           done();
         });
     });
@@ -383,7 +417,6 @@ describe("Record Service", () => {
           done();
         });
     });
-
     test("Wrong maxCount type", (done) => {
       request(server)
         .post("/record")

@@ -17,6 +17,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// To checking healthy of server
 app.route("/ping").get((req, res) => {
   res.status(200).json({
     code: 0,
@@ -24,12 +25,15 @@ app.route("/ping").get((req, res) => {
   });
 });
 
+// Swagger documentation
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.route("/record").post(record_sr.filterRecords);
 
+//
 app.use((req, res) => {
   res.status(404).json({
+    code: 2,
     msg: "URL not found",
   });
 });

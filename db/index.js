@@ -25,11 +25,16 @@ function connect() {
 }
 
 /**
- *
+ * Get list of records
  * @param Options.startDate Started from
  * @param Options.endDate End date
  * @param Options.minCount Minimum total count
  * @param Options.maxCount Maximum total count
+ *
+ * @returns (Promise)
+ * @returns (String) key
+ * @returns (Date) createdAt
+ * @returns (Integer) totalCount
  */
 function getRecords({ startDate, endDate, minCount, maxCount } = {}) {
   logger.info("getRecords", startDate, endDate, minCount, maxCount);
