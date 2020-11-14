@@ -1,2 +1,7 @@
-# sample-express
-ExpressJS and Mongoose Sample Project 
+# Sample Express Project
+
+---
+
+ExpressJS and Mongoose Sample Project
+
+---
