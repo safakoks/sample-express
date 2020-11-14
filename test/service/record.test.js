@@ -3,24 +3,18 @@ const { expect } = require("@jest/globals");
 const request = require("supertest");
 const server = require("../../server");
 const mongoDB = require("../../db");
+const db = require("../../db");
 
 describe("Record Service", () => {
-  test("route should be exists", (done) => {
-    request(server)
-      .post("/record")
-      .expect("Content-Type", /json/)
-      .end((err, res) => {
-        expect(err).toBeNull();
-        expect(res.statusCode).not.toBe(404);
-        expect(res.statusCode).not.toBe(500);
-        done();
-      });
-  });
   describe("Listing Records", () => {
     let records;
-    beforeAll(async (done) => {
-      const db = await mongoDB.connect();
+    beforeAll(async () => {
+      await mongoDB.connect();
+
+      const db = mongoDB.getClient();
+
       records = db.collection("records");
+
       const mockRecords = [
         {
           key: "key1",
@@ -53,10 +47,24 @@ describe("Record Service", () => {
           counts: [8, 102, 90],
         },
       ];
-      await records.insert(mockRecords);
-      done();
+      await records.insertMany(mockRecords);
     });
 
+    afterAll(async () => {
+      await db.getConnection().close();
+      await db.getClient().close();
+    });
+    test("route should be exists", (done) => {
+      request(server)
+        .post("/record")
+        .expect("Content-Type", /json/)
+        .end((err, res) => {
+          expect(err).toBeNull();
+          expect(res.statusCode).not.toBe(404);
+          expect(res.statusCode).not.toBe(500);
+          done();
+        });
+    });
     test("should return all records with right schema", async (done) => {
       request(server)
         .post("/record")

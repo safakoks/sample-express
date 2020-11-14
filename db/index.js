@@ -19,6 +19,7 @@ const MongoClient = require("mongodb").MongoClient;
 
 const logger = log.newLogger("mongo");
 let dbClient;
+let mongoConnection;
 
 // Use connect method to connect to the server
 function connect() {
@@ -30,6 +31,7 @@ function connect() {
           logger.error("Connect", err);
           reject(err);
         }
+        mongoConnection = client;
         dbClient = client.db(global.__MONGO_DB_NAME__);
 
         logger.info("Connected successfully to server");
@@ -89,4 +91,18 @@ function getRecords({ startDate, endDate, minCount, maxCount } = {}) {
     .toArray();
 }
 
-module.exports = { connect, getRecords };
+/**
+ * Get Connected MongoDB Client
+ */
+function getClient() {
+  return dbClient;
+}
+
+/**
+ * Get MongoDB Connection
+ */
+function getConnection() {
+  return mongoConnection;
+}
+
+module.exports = { connect, getRecords, getClient, getConnection };

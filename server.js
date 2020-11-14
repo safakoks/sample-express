@@ -15,7 +15,9 @@ const swaggerDocument = require("./swagger.json");
 const record_sr = require("./service/record_service");
 
 const app = express();
-app.use(morgan());
+
+if (process.env.NODE_ENV !== "test") app.use(morgan("combined"));
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -40,16 +42,16 @@ app.use((req, res) => {
   });
 });
 
-db.connect()
-  .then(() => {
-    if (process.env.NODE_ENV !== "test") {
+if (process.env.NODE_ENV !== "test") {
+  db.connect()
+    .then(() => {
       const port = process.env.PORT || config.PORT;
       app.listen(port, () => {
         logger.info("Server is listening on ", port);
         logger.info(`Docs on http://localhost:${port}/docs`);
       });
-    }
-  })
-  .catch(logger.error);
+    })
+    .catch(logger.error);
+}
 
 module.exports = app;
